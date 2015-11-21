@@ -11,8 +11,8 @@ public class Carrera{
 
 		for(int i=0; i<10; i++){
 			bici1.pedalea(randInt(1,5));
-			bici1.pedalea(randInt(1,5));
-			bici1.pedalea(randInt(1,5));
+			bici2.pedalea(randInt(1,5));
+			bici3.pedalea(randInt(1,5));
 		}
 
 		if((bici1.getDistancia()>bici2.getDistancia()) &&  (bici1.getDistancia() > bici3.getDistancia())){
