@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="font_title">35sp</dimen>
+    <dimen name="padding_small">10dp</dimen>
+    <dimen name="font_medium">25sp</dimen>
+</resources>
