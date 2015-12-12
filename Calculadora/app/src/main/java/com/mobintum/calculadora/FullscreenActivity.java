@@ -135,6 +135,7 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
                 oper1 = 0.0;
                 flagOper = false;
                 break;
+
             case R.id.btnEqual:
                 if(oper1!=0.0 && flagOper){
                     number = Double.parseDouble(textResult.getText().toString());
@@ -148,11 +149,20 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
                 Button btnTemp = (Button) v;
                 String text = btnTemp.getText().toString();
                 number = Double.parseDouble(textResult.getText().toString());
+
                 if(number!=0.0 && flagOper) {
-                    textResult.append(text);
+                    if(text.equals(".")){
+                        String strResult = textResult.getText().toString();
+                        if(!strResult.contains("."))
+                            textResult.append(text);
+                    }else {
+                        textResult.append(text);
+                    }
                 }else{
-                    textResult.setText(text);
-                    flagOper = true;
+                    if(!text.equals(".")) {
+                        textResult.setText(text);
+                        flagOper = true;
+                    }
                 }
                 break;
 
