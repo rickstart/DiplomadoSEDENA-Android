@@ -148,6 +148,14 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
                 }
 
                 break;
+
+            case R.id.btnPercent:
+                number = Double.parseDouble(textResult.getText().toString());
+                if(number!=0.0) {
+                    textResult.setText(formatResult(number/100));
+                }
+
+                break;
             default:
                 Button btnTemp = (Button) v;
                 String text = btnTemp.getText().toString();
