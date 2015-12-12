@@ -154,6 +154,18 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
                 if(number!=0.0) {
                     textResult.setText(formatResult(number/100));
                 }
+                break;
+
+            case R.id.btnLessMore:
+                String result = textResult.getText().toString();
+                if(!result.equals("0")){
+                    if(result.contains("-")){
+                        result =result.substring(1,result.length());
+                    }else {
+                        result="-"+result;
+                    }
+                    textResult.setText(result);
+                }
 
                 break;
             default:
