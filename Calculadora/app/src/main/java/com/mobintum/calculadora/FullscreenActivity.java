@@ -158,11 +158,9 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
                     }else {
                         textResult.append(text);
                     }
-                }else{
-                    if(!text.equals(".")) {
-                        textResult.setText(text);
-                        flagOper = true;
-                    }
+                }else if(!text.equals(".")) {
+                    textResult.setText(text);
+                    flagOper = true;
                 }
                 break;
 
