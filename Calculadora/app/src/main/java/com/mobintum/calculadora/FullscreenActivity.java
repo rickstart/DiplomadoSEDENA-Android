@@ -2,6 +2,7 @@ package com.mobintum.calculadora;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -71,11 +72,13 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
     public String formatResult(Double result){
         String strResult = Double.toString(result);
         String number[] = strResult.split("\\.");
-        if(Integer.parseInt(number[1])==0){
+
+        if(number[1].equals("0")){
             return number[0];
         }else{
             return strResult;
         }
+
     }
 
     public Double operation(int typeOper, double oper1, double oper2){
@@ -150,7 +153,7 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
                 String text = btnTemp.getText().toString();
                 number = Double.parseDouble(textResult.getText().toString());
 
-                if(number!=0.0 && flagOper) {
+                if((number!=0.0 && flagOper) || textResult.getText().toString().equals("0.")) {
                     if(text.equals(".")){
                         String strResult = textResult.getText().toString();
                         if(!strResult.contains("."))
@@ -158,8 +161,13 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
                     }else {
                         textResult.append(text);
                     }
-                }else if(!text.equals(".")) {
-                    textResult.setText(text);
+                }else {
+
+                    if(text.equals(".")){
+                        textResult.setText("0"+text);
+                    }else {
+                        textResult.setText(text);
+                    }
                     flagOper = true;
                 }
                 break;
