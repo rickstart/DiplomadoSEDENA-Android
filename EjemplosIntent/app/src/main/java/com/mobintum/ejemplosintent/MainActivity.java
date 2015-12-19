@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btnBrowser:
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.gaudena.com"));
+
                 startActivity(intent);
                 break;
 
@@ -89,12 +90,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btnActivity:
                 intent = new Intent(this, SecondActivity.class);
+                intent.putExtra("message", "Este mensaje se envio desde la primera actividad");
                 startActivity(intent);
 
                 break;
 
             case R.id.btnTwitter:
-                /*
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?screen_name=rickstart"));
                 try {
                     startActivity(intent);
@@ -105,8 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }catch(ActivityNotFoundException k){
                         Toast.makeText(this, "No tienes market instalado", Toast.LENGTH_SHORT).show();
                     }
-
-                }*/
+                }
                 break;
 
 
