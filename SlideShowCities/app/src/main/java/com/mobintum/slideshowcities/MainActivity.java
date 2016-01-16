@@ -1,5 +1,6 @@
 package com.mobintum.slideshowcities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView photo;
     ArrayList<City> cities = new ArrayList<>();
     int index = 0;
+    float a = 1.69f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +27,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnBack.setOnClickListener(this);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
         btnNext.setOnClickListener(this);
+
         photo = (ImageView) findViewById(R.id.photo);
         btnGo = (Button) findViewById(R.id.btnGo);
+        btnGo.setOnClickListener(this);
         City huatulco = new City("Huatulco","1000000","Oaxaca Beach", getResources().getDrawable(R.drawable.huatulco));
         City acapulco = new City("Acapulco","1000000","Acapulco Beach", getResources().getDrawable(R.drawable.acapulco));
         City holbox = new City("Holbox","1000000","Holbox Beach", getResources().getDrawable(R.drawable.holbox));
@@ -62,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnGo:
+                Intent intent = new Intent(this, SecondActivity.class);
+                intent.putExtra("index", index);
+                startActivity(intent);
                 break;
         }
 
