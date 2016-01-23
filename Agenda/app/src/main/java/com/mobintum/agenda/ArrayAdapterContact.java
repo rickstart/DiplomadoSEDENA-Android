@@ -47,7 +47,7 @@ public class ArrayAdapterContact extends ArrayAdapter<Contact> {
         holder.txtName.setText(objects[position].getName());
 
 
-        return super.getView(position, convertView, parent);
+        return convertView;
     }
 
     class Viewholder{
