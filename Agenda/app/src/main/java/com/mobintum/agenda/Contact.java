@@ -1,9 +1,11 @@
 package com.mobintum.agenda;
 
+import java.io.Serializable;
+
 /**
  * Created by Rick on 23/01/16.
  */
-public class Contact {
+public class Contact implements Serializable {
     private String name;
     private String phone;
     private String email;

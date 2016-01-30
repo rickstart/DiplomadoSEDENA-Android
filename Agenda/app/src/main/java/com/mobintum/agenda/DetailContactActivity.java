@@ -14,15 +14,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 public class DetailContactActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView photo;
     private TextView txtName, txtEmail, txtPhone, txtGithub;
     private ImageButton btnEmail, btnPhone, btnGithub;
+    private Contact contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_contact);
+        if(getIntent()!=null){
+            this.contact = (Contact) getIntent().getExtras().getSerializable("contact");
+        }
 
         photo = (ImageView) findViewById(R.id.photo);
         txtName = (TextView) findViewById(R.id.txtName);
@@ -38,6 +44,16 @@ public class DetailContactActivity extends AppCompatActivity implements View.OnC
         btnPhone.setOnClickListener(this);
         btnGithub.setOnClickListener(this);
 
+        loadContact();
+
+    }
+
+    private void loadContact(){
+        txtName.setText(contact.getName());
+        txtEmail.setText(contact.getEmail());
+        txtPhone.setText(contact.getPhone());
+        txtGithub.setText(contact.getGithub());
+        Picasso.with(getApplicationContext()).load(contact.getPhoto()).into(photo);
     }
 
     @Override
@@ -45,10 +61,7 @@ public class DetailContactActivity extends AppCompatActivity implements View.OnC
         Intent intent;
         switch (v.getId()){
             case R.id.btnEmail:
-                intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:ricrdo.celj@gmail.com"));
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Esta es una prueba de tema");
-                intent.putExtra(Intent.EXTRA_TEXT, "Este mensaje fue generado desde Java");
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"ricardo.celj@gmail.com","mobilestudiotest@gmail.com"});
+                intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"+contact.getEmail()));
 
                 try {
                     startActivity(intent);
@@ -59,7 +72,7 @@ public class DetailContactActivity extends AppCompatActivity implements View.OnC
 
                 break;
             case R.id.btnPhone:
-                intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:(521) 5514382887"));
+                intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+contact.getPhone()));
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, "No tienes el permiso para llamar", Toast.LENGTH_SHORT).show();
                 }else{
@@ -68,7 +81,7 @@ public class DetailContactActivity extends AppCompatActivity implements View.OnC
 
                 break;
             case R.id.btnGithub:
-                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.github.com"));
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.github.com/"+contact.getGithub()));
 
                 startActivity(intent);
                 break;
