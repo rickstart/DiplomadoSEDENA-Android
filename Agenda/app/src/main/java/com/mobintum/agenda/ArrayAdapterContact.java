@@ -42,11 +42,8 @@ public class ArrayAdapterContact extends ArrayAdapter<Contact> {
         }else{
             holder = (Viewholder) convertView.getTag();
         }
-
         Picasso.with(context).load(objects[position].getPhoto()).into(holder.photo);
         holder.txtName.setText(objects[position].getName());
-
-
         return convertView;
     }
 
