@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.mobintum.musicplayer.PlayerSongActivity">
+
+    <TextView
+        android:id="@+id/textDetailSong"
+        android:text="@string/song"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="@dimen/font_medium"/>
+
+    <ImageView
+        android:id="@+id/imgThumbDetail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:layout_gravity="center"
+        android:src="@drawable/thumb_get_lucky"/>
+
+
+
+    <TextView
+        android:id="@+id/textDetailArtist"
+        android:text="@string/artist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="@dimen/font_medium"/>
+    <TextView
+        android:id="@+id/textDetailAlbum"
+        android:text="@string/album"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="@dimen/font_medium"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <TextView
+            android:text="@string/time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="1"/>
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:id="@+id/progressBar"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:id="@+id/textDetailTime"
+            android:text="@string/time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <ImageButton
+            android:id="@+id/btnBackward"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_backward"
+            android:background="@android:color/transparent"/>
+        <ImageButton
+            android:id="@+id/btnPlay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_play"
+            android:background="@android:color/transparent"/>
+        <ImageButton
+            android:id="@+id/btnForward"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_forward"
+            android:background="@android:color/transparent"/>
+
+
+    </LinearLayout>
+</LinearLayout>
