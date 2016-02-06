@@ -88,7 +88,7 @@
         <ImageButton
             android:id="@+id/btnBackward"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
 
             android:scaleType="fitXY"
@@ -97,7 +97,7 @@
         <ImageButton
             android:id="@+id/btnPlay"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
 
             android:scaleType="fitXY"
@@ -106,7 +106,7 @@
         <ImageButton
             android:id="@+id/btnForward"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
 
             android:scaleType="fitXY"

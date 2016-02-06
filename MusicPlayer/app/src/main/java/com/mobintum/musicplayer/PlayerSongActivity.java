@@ -98,13 +98,23 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
         switch (v.getId()){
 
             case R.id.btnPlay:
-
-
+                if(flag==0) {
+                    btnPlay.setImageDrawable(getResources().getDrawable(R.drawable.btn_pause));
+                    flag = 1;
+                }else {
+                    btnPlay.setImageDrawable(getResources().getDrawable(R.drawable.btn_play));
+                    flag=0;
+                }
+                break;
             case R.id.btnBackward:
-
-
+                if(position>0)
+                    position--;
+                loadData();
                 break;
             case R.id.btnForward:
+                if(position < songs.length -1)
+                    position++;
+                loadData();
 
                 break;
         }
