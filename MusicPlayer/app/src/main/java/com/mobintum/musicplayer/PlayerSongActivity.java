@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class PlayerSongActivity extends AppCompatActivity implements View.OnClickListener{
+public class PlayerSongActivity extends AppCompatActivity implements View.OnClickListener, Runnable{
 
     MediaPlayer mPlayer;
     ImageButton btnPlay, btnForward, btnBackward;
@@ -36,6 +36,7 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
     Thread thread;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +49,8 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
             position= 0;
         }
 
+
+        thread = new Thread(this);
         songs = Song.getSongs();
 
         btnPlay = (ImageButton) findViewById(R.id.btnPlay);
@@ -65,6 +68,7 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
         btnPlay.setOnClickListener(this);
         btnBackward.setOnClickListener(this);
         btnForward.setOnClickListener(this);
+
         loadData();
 
 
@@ -77,8 +81,8 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
+        stop();
     }
 
     public void loadData(){
@@ -89,38 +93,86 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
         textDetailSong.setText(song.getTitle());
         textDetailArtist.setText(song.getArtist());
         textDetailAlbum.setText(song.getAlbum());
-
-
+        mPlayer = MediaPlayer.create(this,getResources().getIdentifier("raw/"+song.getUrlSong(), "raw", this.getPackageName()));
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setProgress(0);
+        progressBar.setMax(mPlayer.getDuration());
+        play();
     }
 
+    private void stop(){
+        mPlayer.stop();
+        flag = 0;
+        btnPlay.setImageDrawable(getResources().getDrawable(R.drawable.btn_pause));
+    }
+
+    private void play(){
+        if(flag==0) {
+            btnPlay.setImageDrawable(getResources().getDrawable(R.drawable.btn_pause));
+            flag = 1;
+            mPlayer.start();
+            if(thread.getState() != Thread.State.TIMED_WAITING)
+                thread.start();
+
+        }else {
+            btnPlay.setImageDrawable(getResources().getDrawable(R.drawable.btn_play));
+            flag=0;
+            mPlayer.pause();
+        }
+
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
 
             case R.id.btnPlay:
-                if(flag==0) {
-                    btnPlay.setImageDrawable(getResources().getDrawable(R.drawable.btn_pause));
-                    flag = 1;
-                }else {
-                    btnPlay.setImageDrawable(getResources().getDrawable(R.drawable.btn_play));
-                    flag=0;
-                }
+                play();
                 break;
             case R.id.btnBackward:
-                if(position>0)
+                if(position>0) {
                     position--;
-                loadData();
+                    stop();
+                    loadData();
+                }
                 break;
             case R.id.btnForward:
-                if(position < songs.length -1)
+                if(position < songs.length -1) {
                     position++;
-                loadData();
-
+                    stop();
+                    loadData();
+                }
                 break;
         }
     }
 
 
+    @Override
+    public void run() {
+        int currentPosition = 0;
+        int total = mPlayer.getDuration();
+        while(mPlayer != null && currentPosition < total){
+            try {
+                Thread.sleep(1000);
+                currentPosition = mPlayer.getCurrentPosition();
+                final int seconds = (currentPosition /1000 ) % 60;
+                final int minutes = (currentPosition / (1000*60)) %60;
+                final int hours = (currentPosition / (1000*60*60)) % 60;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(hours>0)
+                            textDetailTime.setText(""+hours+":"+minutes+":"+seconds);
+                        else
+                            textDetailTime.setText(""+minutes+":"+seconds);
+                    }
+                });
 
+                progressBar.setProgress(currentPosition);
 
+            }catch (Exception e){
+
+            }
+
+        }
+    }
 }
