@@ -77,7 +77,7 @@ public class Song implements Serializable{
         Song song1 = new Song("Get Lucky", "Daft Punk", "Get Lucky","song_getlucky","5:03","https://upload.wikimedia.org/wikipedia/en/7/71/Get_Lucky.jpg");
         Song song2 = new Song("Tachas y Perico", "Galatzia", "Unknow","song_tachas","5:03","https://i.ytimg.com/vi/GU_JcYi6TyY/maxresdefault.jpg");
         Song song3 = new Song("Love Me Again", "John Newman", "Unknow","john_newman_loveme_again","5:03","http://assets5.capitalfm.com/2013/50/john-newman-love-me-again-1387299002-view-0.jpg");
-        Song[] arraySongs = {song1,song2,song3};
+        Song[] arraySongs = {song1,song2,song3,song1,song2,song3,song1,song2,song3,song1,song2,song3,song1,song2,song3};
         return arraySongs;
 
     }

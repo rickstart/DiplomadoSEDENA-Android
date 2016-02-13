@@ -48,6 +48,7 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
         //position = (intent.getExtras()!=null)? intent.getExtras().getInt("ID"): 0 ;
         if(intent.getExtras()!=null){
             position = intent.getExtras().getInt("position");
+            currentPosition = intent.getExtras().getInt("currentPosition");
         }else{
             position= 0;
         }
@@ -91,11 +92,7 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
                 currentPosition = seekBar.getProgress();
             }
         });
-
         loadData();
-
-
-
     }
 
 
@@ -120,6 +117,7 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setProgress(0);
         progressBar.setMax(mPlayer.getDuration());
+        mPlayer.seekTo(currentPosition);
         play();
     }
 
@@ -169,7 +167,7 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-    public String formatMin(int hours, int min, int sec){
+    public static String formatMin(int hours, int min, int sec){
 
         String hh,mm,ss;
         hh = String.valueOf(hours);
@@ -183,7 +181,7 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
     }
     @Override
     public void run() {
-        currentPosition = 0;
+        //currentPosition = 0;
         total = mPlayer.getDuration();
         while(mPlayer != null && currentPosition < total){
             try {

@@ -38,15 +38,11 @@ public class ListSongAdapter extends ArrayAdapter {
         View rowView = inflater.inflate(R.layout.item_list_song, parent, false);
 
         ViewHolder holder = new ViewHolder();
-
         holder.textSong = (TextView) rowView.findViewById(R.id.textSong);
         holder.textArtist = (TextView) rowView.findViewById(R.id.textArtist);
         holder.imageThumbSong = (ImageView) rowView.findViewById(R.id.imgThumbSong);
-
         holder.textSong.setText(songs[position].getTitle());
         holder.textArtist.setText(songs[position].getArtist());
-
-        Log.e("ADAPTER", songs[position].getAlbumImage());
         Picasso.with(context).load(songs[position].getAlbumImage()).into(holder.imageThumbSong);
 
 
