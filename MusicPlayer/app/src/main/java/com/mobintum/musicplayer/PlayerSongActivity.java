@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -25,7 +26,7 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
     ImageButton btnPlay, btnForward, btnBackward;
     ImageView imgThumbDetail;
     TextView textDetailSong, textDetailArtist, textDetailAlbum, textDetailTime;
-    ProgressBar progressBar;
+    SeekBar progressBar;
 
     Song song;
     Song[] songs;
@@ -34,6 +35,8 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
     int flag = 0;
 
     Thread thread;
+    int currentPosition;
+    int total;
 
 
 
@@ -62,12 +65,32 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
         textDetailArtist = (TextView) findViewById(R.id.textDetailArtist);
         textDetailAlbum = (TextView) findViewById(R.id.textDetailAlbum);
         textDetailTime = (TextView) findViewById(R.id.textDetailTime);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = (SeekBar) findViewById(R.id.progressBar);
 
 
         btnPlay.setOnClickListener(this);
         btnBackward.setOnClickListener(this);
         btnForward.setOnClickListener(this);
+
+        progressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mPlayer.seekTo(seekBar.getProgress());
+                progressBar.setProgress(seekBar.getProgress());
+                currentPosition = seekBar.getProgress();
+            }
+        });
 
         loadData();
 
@@ -146,10 +169,22 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
     }
 
 
+    public String formatMin(int hours, int min, int sec){
+
+        String hh,mm,ss;
+        hh = String.valueOf(hours);
+        mm = String.valueOf(min);
+        ss = String.valueOf(sec);
+        hh = (hh.length()<2)? "0"+hh:hh;
+        mm = (mm.length()<2)? "0"+mm:mm;
+        ss = (ss.length()<2)? "0"+ss:ss;
+
+        return (hours>0)?hh+":"+mm+":"+ss:mm+":"+ss;
+    }
     @Override
     public void run() {
-        int currentPosition = 0;
-        int total = mPlayer.getDuration();
+        currentPosition = 0;
+        total = mPlayer.getDuration();
         while(mPlayer != null && currentPosition < total){
             try {
                 Thread.sleep(1000);
@@ -160,10 +195,7 @@ public class PlayerSongActivity extends AppCompatActivity implements View.OnClic
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(hours>0)
-                            textDetailTime.setText(""+hours+":"+minutes+":"+seconds);
-                        else
-                            textDetailTime.setText(""+minutes+":"+seconds);
+                        textDetailTime.setText(formatMin(hours,minutes,seconds));
                     }
                 });
 
