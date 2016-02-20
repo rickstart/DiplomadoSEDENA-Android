@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.mobintum.miprimerfragmento.MainActivity"
-    android:orientation="horizontal"
     android:id="@+id/cancha">
 
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -50,6 +55,40 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:id="@+id/portero2"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textSize="@dimen/font_title"
+            android:textColor="@color/blue"
+            android:padding="@dimen/padding_small"
+            android:text="@string/zero"
+            android:id="@+id/scoreLeft"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textSize="@dimen/font_title"
+            android:textColor="@color/blue"
+            android:padding="@dimen/padding_small"
+            android:text="@string/zero"
+            android:id="@+id/scoreRight"/>
 
+    </LinearLayout>
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:src="@drawable/img_gol"
+        android:tint="@color/colorAccent"
+        android:id="@+id/imgGol"/>
+
+</RelativeLayout>

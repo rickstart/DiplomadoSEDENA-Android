@@ -8,4 +8,5 @@
     <color name="green">#A3FA20</color>
     <color name="purple">#7720FA</color>
     <color name="orange">#FA9C20</color>
+    <color name="colorAccentTransparent">#FF4081CC</color>
 </resources>

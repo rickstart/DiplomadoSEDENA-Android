@@ -4,6 +4,7 @@ package com.mobintum.miprimerfragmento;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class JugadorFragment extends Fragment implements View.OnClickListener {
     private RelativeLayout layoutPlayer;
     private ImageView imgPlayer, ball;
     private CharlaJugadores escucharCharla;
+    private boolean showR;
 
     @Override
     public void onAttach(Context context) {
@@ -63,6 +65,7 @@ public class JugadorFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setRetainInstance(true);
         View view = inflater.inflate(R.layout.fragment_jugador, container, false);
         txtMessage = (TextView) view.findViewById(R.id.txtMessage);
         layoutPlayer = (RelativeLayout) view.findViewById(R.id.layoutPlayer);
@@ -70,7 +73,7 @@ public class JugadorFragment extends Fragment implements View.OnClickListener {
         ball = (ImageView) view.findViewById(R.id.ball);
 
         imgPlayer.setOnClickListener(this);
-
+        showBall(showR);
         txtMessage.setText(message);
         switch (color){
             case 1:
@@ -100,7 +103,11 @@ public class JugadorFragment extends Fragment implements View.OnClickListener {
 
         switch (v.getId()){
             case R.id.imgPlayer:
-                escucharCharla.pasarBalon(randInt(0,5));
+                int index = randInt(0,5);
+                if(index==0 || index == 5)
+                    escucharCharla.goal(true);
+
+                escucharCharla.pasarBalon(index);
                 break;
         }
 
@@ -109,6 +116,7 @@ public class JugadorFragment extends Fragment implements View.OnClickListener {
 
     public interface CharlaJugadores {
         public void pasarBalon(int id);
+        public void goal(boolean gol);
     }
 
     public static int randInt(int min, int max) {
@@ -118,9 +126,17 @@ public class JugadorFragment extends Fragment implements View.OnClickListener {
     }
 
     public void showBall(boolean show){
+        showR = show;
+
         if(show)
             ball.setVisibility(View.VISIBLE);
         else
             ball.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("show", showR);
     }
 }
