@@ -1,19 +1,21 @@
 package com.mobintum.miprimerfragmento;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class JugadorFragment extends Fragment {
+public class JugadorFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG_PARAM_COLOR = "paramColor";
     private static final String ARG_PARAM_MESSAGE = "paramMessage";
@@ -22,6 +24,18 @@ public class JugadorFragment extends Fragment {
     private String message;
     private TextView txtMessage;
     private RelativeLayout layoutPlayer;
+    private ImageView imgPlayer, ball;
+    private CharlaJugadores escucharCharla;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            this.escucharCharla = (CharlaJugadores) getActivity();
+        }catch (ClassCastException e){
+            throw new ClassCastException(getActivity().toString()+" Tienes que implemetar la interface");
+        }
+    }
 
     public  static JugadorFragment newInstance(int color, String message){
         JugadorFragment fragment = new JugadorFragment();
@@ -52,6 +66,11 @@ public class JugadorFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_jugador, container, false);
         txtMessage = (TextView) view.findViewById(R.id.txtMessage);
         layoutPlayer = (RelativeLayout) view.findViewById(R.id.layoutPlayer);
+        imgPlayer = (ImageView) view.findViewById(R.id.imgPlayer);
+        ball = (ImageView) view.findViewById(R.id.ball);
+
+        imgPlayer.setOnClickListener(this);
+
         txtMessage.setText(message);
         switch (color){
             case 1:
@@ -76,4 +95,32 @@ public class JugadorFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+            case R.id.imgPlayer:
+                escucharCharla.pasarBalon(randInt(0,5));
+                break;
+        }
+
+    }
+
+
+    public interface CharlaJugadores {
+        public void pasarBalon(int id);
+    }
+
+    public static int randInt(int min, int max) {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
+    }
+
+    public void showBall(boolean show){
+        if(show)
+            ball.setVisibility(View.VISIBLE);
+        else
+            ball.setVisibility(View.GONE);
+    }
 }

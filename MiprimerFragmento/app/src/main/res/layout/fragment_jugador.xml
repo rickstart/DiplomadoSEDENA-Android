@@ -5,18 +5,33 @@
     tools:context=".JugadorFragment"
     android:id="@+id/layoutPlayer">
 
-    <ImageView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/img_player"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/imgPlayer"/>
+        android:id="@+id/linearPlayer"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_soccer"
+            android:visibility="gone"
+            android:id="@+id/ball"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_player"
+            android:id="@+id/imgPlayer"/>
+
+    </LinearLayout>
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imgPlayer"
+        android:layout_below="@id/linearPlayer"
         android:gravity="center"
         android:textSize="@dimen/font_medium"
         android:text="@string/message"
