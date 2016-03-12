@@ -22,7 +22,6 @@ public class ListNoticiasFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,7 +29,6 @@ public class ListNoticiasFragment extends Fragment {
         listNoticias = (ListView) view.findViewById(R.id.listNoticias);
         adapter = new NoticiaAdapter(getContext(),R.layout.item_noticia,Noticia.getData());
         listNoticias.setAdapter(adapter);
-
         return view;
     }
 
