@@ -124,8 +124,6 @@ public class NewsFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),2);
         rvNews.setLayoutManager(layoutManager);
         rvNews.setAdapter(adapter);
-
-
         return view;
     }
 

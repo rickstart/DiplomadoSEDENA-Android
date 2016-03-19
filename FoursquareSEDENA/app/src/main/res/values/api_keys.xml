@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
+        AIzaSyByUiwW7z818Wu3bXiDI-zYnLkvoY_6lLo
+    </string>
+    <string name="four_client_id" translatable="false" templateMergeStrategy="preserve">
+        KFBD1D243LNTYSNNUWJ1X3ZD4V5JXJ04IB0OEDV11JR1OROX
+    </string>
+    <string name="four_client_secret" translatable="false" templateMergeStrategy="preserve">
+        DMTPETRTOC3BRZEK2VIWZV3A1MPIHV4XO2IHMNH4Q4MM5YNQ
+    </string>
+</resources>

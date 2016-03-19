@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FoursquareSEDENA</string>
+    <string name="search">Search</string>
+    <string name="refresh">refresh</string>
+</resources>
