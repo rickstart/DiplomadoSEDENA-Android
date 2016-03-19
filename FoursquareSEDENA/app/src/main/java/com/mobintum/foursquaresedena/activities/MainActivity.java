@@ -20,9 +20,19 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.mobintum.foursquaresedena.R;
 import com.mobintum.foursquaresedena.application.App;
 import com.mobintum.foursquaresedena.fragments.MapFragment;
+import com.mobintum.foursquaresedena.models.Venue;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, Response.ErrorListener, Response.Listener<String>{
 
@@ -38,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
         fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.content, new MapFragment()).commit();
+        fm.beginTransaction().replace(R.id.content, new MapFragment(), MapFragment.TAG).commit();
     }
 
     @Override
@@ -101,6 +111,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onResponse(String response) {
         Log.e("DEBUG RESPONSE", response);
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(response);
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<Venue>>(){}.getType();
+            List<Venue> venues =  gson.fromJson(jsonObject.getJSONObject("response").get("venues").toString(), listType);
+            MapFragment mapFragment = (MapFragment) fm.findFragmentByTag(MapFragment.TAG);
+            mapFragment.loadVenues(venues);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
 
     }
 }

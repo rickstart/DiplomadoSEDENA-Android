@@ -28,7 +28,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class MapFragment extends Fragment {
-
+    public static final String TAG = "MapFragment";
     private static final String ARG_PARAM_LIST_VENUES = "paramVenues";
     private List<Venue> venues;
     private GoogleMap gMap;
