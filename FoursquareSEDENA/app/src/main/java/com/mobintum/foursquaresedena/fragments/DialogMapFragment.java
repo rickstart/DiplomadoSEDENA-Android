@@ -19,6 +19,7 @@ import android.view.Window;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -32,7 +33,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DialogMapFragment extends DialogFragment {
+public class DialogMapFragment extends DialogFragment  implements OnMapReadyCallback{
     public final static String TAG = "DialogMapFragment";
     private static final String ARG_PARAM_VENUE = "paramVenue";
     private Venue venue;
@@ -65,35 +66,16 @@ public class DialogMapFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_dialog_map, container, false);
 
 
-
-        SupportMapFragment fragment = new SupportMapFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.mapLoc, fragment, "APA").commit();
+        transaction.add(R.id.mapLoc, new SupportMapFragment(), "APA").commit();
         getChildFragmentManager().executePendingTransactions();
-        Fragment fragments = getChildFragmentManager().findFragmentById(R.id.mapLoc);
-        if(fragments!=null)
+        SupportMapFragment fragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapLoc);
+        if(fragment!=null)
             Log.e("DEBUG", "NOT NULL");
         else
             Log.e("DEBUG", "NULL");
 
-        fragment = (SupportMapFragment) fragments;
-        GoogleMap gMap = fragment.getMap();
-
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            gMap.setMyLocationEnabled(true);
-            Log.e(TAG, "ENABLE");
-        }
-
-        gMap.isMyLocationEnabled();
-
-        LatLng latLng = new LatLng(venue.getLocation().getLat(),venue.getLocation().getLng());
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 13);
-        gMap.animateCamera(cameraUpdate);
-        gMap.clear();
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title(venue.getName());
-        gMap.addMarker(markerOptions);
+        fragment.getMapAsync(this);
         return view;
     }
 
@@ -122,6 +104,31 @@ public class DialogMapFragment extends DialogFragment {
         // request a window without the title
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return dialog;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+//DO WHATEVER YOU WANT WITH GOOGLEMAP
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(true);
+            Log.e(TAG, "ENABLE");
+        }
+
+        map.setIndoorEnabled(true);
+        map.setBuildingsEnabled(true);
+        map.getUiSettings().setZoomControlsEnabled(true);
+
+        map.isMyLocationEnabled();
+
+        LatLng latLng = new LatLng(venue.getLocation().getLat(),venue.getLocation().getLng());
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 16);
+        map.animateCamera(cameraUpdate);
+        map.clear();
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        markerOptions.title(venue.getName());
+        map.addMarker(markerOptions);
     }
 
 }
