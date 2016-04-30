@@ -26,6 +26,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mobintum.foursquaresedena.R;
 import com.mobintum.foursquaresedena.application.App;
 import com.mobintum.foursquaresedena.fragments.MapFragment;
+import com.mobintum.foursquaresedena.fragments.RvVenuesFragment;
 import com.mobintum.foursquaresedena.models.Venue;
 
 import org.json.JSONException;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
         fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.content, new MapFragment(), MapFragment.TAG).commit();
+        fm.beginTransaction().replace(R.id.content, new RvVenuesFragment(), RvVenuesFragment.TAG).commit();
     }
 
     @Override
@@ -118,13 +119,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Type listType = new TypeToken<List<Venue>>(){}.getType();
             List<Venue> venues =  gson.fromJson(jsonObject.getJSONObject("response").get("venues").toString(), listType);
             MapFragment mapFragment = (MapFragment) fm.findFragmentByTag(MapFragment.TAG);
-            mapFragment.loadVenues(venues);
+            RvVenuesFragment rvVenuesFragment = (RvVenuesFragment) fm.findFragmentByTag(RvVenuesFragment.TAG);
+            if(mapFragment!=null)
+                mapFragment.loadVenues(venues);
+            else
+                rvVenuesFragment.loadVenues(venues);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-
-
     }
 }
