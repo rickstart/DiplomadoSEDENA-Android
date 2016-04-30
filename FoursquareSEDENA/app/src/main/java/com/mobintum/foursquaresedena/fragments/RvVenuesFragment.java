@@ -45,7 +45,7 @@ public class RvVenuesFragment extends Fragment {
     }
 
     public void loadVenues(List<Venue> venues){
-        adapter = new VenueRVAdapter(venues);
+        adapter = new VenueRVAdapter(venues,this);
         rvVenue.setAdapter(adapter);
 
     }

@@ -2,6 +2,7 @@ package com.mobintum.foursquaresedena.adapters;
 
 import android.content.Context;
 import android.media.Image;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mobintum.foursquaresedena.R;
+import com.mobintum.foursquaresedena.fragments.DialogMapFragment;
+import com.mobintum.foursquaresedena.fragments.RvVenuesFragment;
 import com.mobintum.foursquaresedena.models.Category;
 import com.mobintum.foursquaresedena.models.Venue;
 import com.squareup.picasso.Picasso;
@@ -28,9 +31,11 @@ public class VenueRVAdapter extends RecyclerView.Adapter<VenueRVAdapter.ViewHold
 
     private List<Venue> venues;
     private Context context;
+    private Fragment fragment;
 
-    public VenueRVAdapter(List<Venue> venues) {
+    public VenueRVAdapter(List<Venue> venues, Fragment fragment) {
         this.venues = venues;
+        this.fragment = fragment;
 
     }
 
@@ -49,7 +54,7 @@ public class VenueRVAdapter extends RecyclerView.Adapter<VenueRVAdapter.ViewHold
             if(venue.getCategories().size()>0) {
                 Category category = venue.getCategories().get(0);
                 Log.e("DEBUG", category.getIcon().getPrefix() + category.getIcon().getSuffix());
-                Picasso.with(context).load(category.getIcon().getPrefix() +"32"+ category.getIcon().getSuffix()).into(holder.imgVenue);
+                Picasso.with(context).load(category.getIcon().getPrefix() + "32" + category.getIcon().getSuffix()).into(holder.imgVenue);
             }
         }
 
@@ -68,6 +73,18 @@ public class VenueRVAdapter extends RecyclerView.Adapter<VenueRVAdapter.ViewHold
                     }
                 }
 
+            }
+        });
+
+        holder.btnLocMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                DialogMapFragment fragmentDialog = DialogMapFragment.newInstance(venue);
+                RvVenuesFragment rvVenuesFragment = (RvVenuesFragment) fragment;
+                fragmentDialog.setTargetFragment(rvVenuesFragment, 1);
+                fragmentDialog.show(fragment.getChildFragmentManager(), DialogMapFragment.TAG);
             }
         });
 

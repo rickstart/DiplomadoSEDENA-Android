@@ -34,16 +34,19 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, Response.ErrorListener, Response.Listener<String>{
 
     public static final String URL_FOURSQUARE = "https://api.foursquare.com/v2/venues/search?";
     private FragmentManager fm;
+    List<Venue> venues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        venues = new ArrayList<>();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -99,6 +102,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fab:
+                MapFragment mapFragment = (MapFragment) fm.findFragmentByTag(MapFragment.TAG);
+
+                if(mapFragment!=null) {
+                    fm.beginTransaction().replace(R.id.content, new RvVenuesFragment(), RvVenuesFragment.TAG).commit();
+                    fm.executePendingTransactions();
+                    RvVenuesFragment rvVenuesFragment = (RvVenuesFragment) fm.findFragmentByTag(RvVenuesFragment.TAG);
+                    rvVenuesFragment.loadVenues(venues);
+                }else{
+                    fm.beginTransaction().replace(R.id.content, new MapFragment(), MapFragment.TAG).commit();
+                    fm.executePendingTransactions();
+                    MapFragment mapFragment1 = (MapFragment) fm.findFragmentById(R.id.content);
+                    if(mapFragment1!=null)
+                        mapFragment1.loadVenues(venues);
+                }
+
                 break;
         }
 
@@ -117,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             jsonObject = new JSONObject(response);
             Gson gson = new Gson();
             Type listType = new TypeToken<List<Venue>>(){}.getType();
-            List<Venue> venues =  gson.fromJson(jsonObject.getJSONObject("response").get("venues").toString(), listType);
+            venues =  gson.fromJson(jsonObject.getJSONObject("response").get("venues").toString(), listType);
             MapFragment mapFragment = (MapFragment) fm.findFragmentByTag(MapFragment.TAG);
             RvVenuesFragment rvVenuesFragment = (RvVenuesFragment) fm.findFragmentByTag(RvVenuesFragment.TAG);
             if(mapFragment!=null)
