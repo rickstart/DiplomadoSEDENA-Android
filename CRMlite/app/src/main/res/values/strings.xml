@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">CRMlite</string>
     <string name="action_settings">Settings</string>
+    <string name="name">Nombre</string>
+    <string name="business_name">Nombre Comercial</string>
+    <string name="rfc">RFC</string>
+    <string name="notes">Notas</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Guardar</string>
 </resources>

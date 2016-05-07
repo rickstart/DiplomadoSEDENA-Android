@@ -64,7 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    businessName varchar(250)," +
                 "    rfc varchar(250)," +
                 "    notes varchar(250)," +
-                "    fk_addressId integer NOT NULL," +
+                "    fk_addressId integer," +
                 "    CONSTRAINT Customer_pk PRIMARY KEY (customerId)," +
                 "    CONSTRAINT Customer_Address FOREIGN KEY (fk_addressId)" +
                 "    REFERENCES Address (addressId)" +
