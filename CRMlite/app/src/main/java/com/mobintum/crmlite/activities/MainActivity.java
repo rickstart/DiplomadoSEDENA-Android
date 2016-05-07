@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import com.mobintum.crmlite.R;
 import com.mobintum.crmlite.database.AndroidDatabaseManager;
 import com.mobintum.crmlite.dialogs.AddCustomerDialog;
+import com.mobintum.crmlite.fragments.RVCustomersFragment;
+import com.mobintum.crmlite.models.Customer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        fm.beginTransaction().replace(R.id.content, new RVCustomersFragment(), RVCustomersFragment.TAG).commit();
+
     }
 
     @Override

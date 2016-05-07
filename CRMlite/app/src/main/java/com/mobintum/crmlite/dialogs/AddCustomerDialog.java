@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.mobintum.crmlite.R;
+import com.mobintum.crmlite.fragments.RVCustomersFragment;
+import com.mobintum.crmlite.models.Customer;
 
 /**
  * Created by Rick on 07/05/16.
@@ -27,13 +30,16 @@ public class AddCustomerDialog extends DialogFragment implements View.OnClickLis
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.dialog_add_customer,container,false);
+        View view=inflater.inflate(R.layout.dialog_add_customer, container, false);
         etName = (FloatLabel) view.findViewById(R.id.etName);
         etBusinessName = (FloatLabel) view.findViewById(R.id.etBusinessName);
         etRFC = (FloatLabel) view.findViewById(R.id.etRFC);
         etNotes = (FloatLabel) view.findViewById(R.id.etNotes);
         btnCancel = (Button) view.findViewById(R.id.btnCancel);
         btnSave = (Button) view.findViewById(R.id.btnSave);
+        btnSave.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
+
         return view;
     }
 
@@ -50,15 +56,35 @@ public class AddCustomerDialog extends DialogFragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnCancel:
+                dismiss();
                 break;
             case R.id.btnSave:
-                save();
+                if(etName.getEditText().getText().toString().isEmpty())
+                    etName.getEditText().setError("Campo Obligatorio");
+                else {
+                    save();
+                }
                 break;
         }
 
     }
 
-    private boolean save(){
-        return false;
+    private void save(){
+
+        String name = etName.getEditText().getText().toString();
+        String businessName = etBusinessName.getEditText().getText().toString();
+        String rfc = etRFC.getEditText().getText().toString();
+        String notes = etNotes.getEditText().getText().toString();
+
+        long id = Customer.insert(getContext(), new Customer(name, businessName, rfc, notes));
+
+        if (id!=-1) {
+            RVCustomersFragment rvCustomersFragment = (RVCustomersFragment) getActivity().getSupportFragmentManager().findFragmentByTag(RVCustomersFragment.TAG);
+            rvCustomersFragment.refreshCustomers();
+            Toast.makeText(getContext(), "Guardado Correctamente", Toast.LENGTH_SHORT).show();
+            dismiss();
+        }
+        else
+            Toast.makeText(getContext(),"Error al Guardar",Toast.LENGTH_SHORT).show();
     }
 }
