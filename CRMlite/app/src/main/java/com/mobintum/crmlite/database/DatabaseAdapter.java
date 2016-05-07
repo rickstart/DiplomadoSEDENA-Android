@@ -33,7 +33,7 @@ public class DatabaseAdapter {
         }
     }
 
-    public static SQLiteDatabase getDB(){
+    public static SQLiteDatabase getDB(Context context){
 
         if(mDb == null)
             openDB(context);
