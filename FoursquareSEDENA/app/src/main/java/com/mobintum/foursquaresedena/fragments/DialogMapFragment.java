@@ -108,7 +108,7 @@ public class DialogMapFragment extends DialogFragment  implements OnMapReadyCall
 
     @Override
     public void onMapReady(GoogleMap map) {
-//DO WHATEVER YOU WANT WITH GOOGLEMAP
+
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
