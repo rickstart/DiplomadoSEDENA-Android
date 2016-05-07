@@ -20,17 +20,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final Integer VER_1 = 1;
     private static final Integer DATABASE_VERSION = VER_1;
 
-    private Context mContext;
+    private Context context;
 
     public DatabaseHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
-        this.mContext = context;
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         db.execSQL("CREATE TABLE Address (" +
-                "    addressId integer NOT NULL AUTOINCREMENT," +
+                "    addressId integer NOT NULL PRIMARY KEY AUTOINCREMENT," +
                 "    street varchar(250) NOT NULL," +
                 "    number varchar(250) NOT NULL," +
                 "    numberInterior varchar(250)," +
@@ -45,7 +46,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    state varchar(250)," +
                 "    fk_countryId integer NOT NULL," +
                 "    fk_stateId integer NOT NULL," +
-                "    CONSTRAINT Address_pk PRIMARY KEY (addressId)," +
                 "    CONSTRAINT Address_Country FOREIGN KEY (fk_countryId)" +
                 "    REFERENCES Country (countryId)," +
                 "    CONSTRAINT Address_State FOREIGN KEY (fk_stateId)" +
@@ -59,22 +59,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ");");
 
         db.execSQL("CREATE TABLE Customer (" +
-                "    customerId integer NOT NULL AUTOINCREMENT," +
+                "    customerId integer NOT NULL PRIMARY KEY AUTOINCREMENT," +
                 "    name varchar(250) NOT NULL," +
                 "    businessName varchar(250)," +
                 "    rfc varchar(250)," +
                 "    notes varchar(250)," +
                 "    fk_addressId integer," +
-                "    CONSTRAINT Customer_pk PRIMARY KEY (customerId)," +
                 "    CONSTRAINT Customer_Address FOREIGN KEY (fk_addressId)" +
                 "    REFERENCES Address (addressId)" +
                 ");");
 
         db.execSQL("CREATE TABLE State (" +
-                "    stateId integer NOT NULL AUTOINCREMENT," +
+                "    stateId integer NOT NULL PRIMARY KEY AUTOINCREMENT," +
                 "    name integer NOT NULL," +
                 "    fk_countryId integer NOT NULL," +
-                "    CONSTRAINT State_pk PRIMARY KEY (stateId)," +
                 "    CONSTRAINT State_Country FOREIGN KEY (fk_countryId)" +
                 "    REFERENCES Country (countryId)" +
                 ");");

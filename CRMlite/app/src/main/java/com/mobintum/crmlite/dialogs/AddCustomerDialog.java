@@ -19,6 +19,7 @@ import com.mobintum.crmlite.R;
  */
 public class AddCustomerDialog extends DialogFragment implements View.OnClickListener{
 
+    public static final String TAG = "AddCustomerDialog";
     private FloatLabel etName, etBusinessName, etRFC,etNotes;
     private Button btnCancel, btnSave;
 
